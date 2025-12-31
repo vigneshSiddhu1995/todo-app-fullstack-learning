@@ -1,0 +1,137 @@
+.dashboard-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  border-left: 4px solid;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  .count {
+    font-size: 2.5rem;
+    font-weight: bold;
+    display: block;
+  }
+
+  &.pending {
+    border-left-color: #f39c12;
+    
+    h3 {
+      color: #f39c12;
+    }
+    
+    .count {
+      color: #f39c12;
+    }
+  }
+
+  &.completed {
+    border-left-color: #27ae60;
+    
+    h3 {
+      color: #27ae60;
+    }
+    
+    .count {
+      color: #27ae60;
+    }
+  }
+
+  &.total {
+    border-left-color: #3498db;
+    
+    h3 {
+      color: #3498db;
+    }
+    
+    .count {
+      color: #3498db;
+    }
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  
+  p {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+}
+
+.quick-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: white;
+
+  &:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+  }
+}
+
+.btn-secondary {
+  background-color: #95a5a6;
+  color: white;
+
+  &:hover {
+    background-color: #7f8c8d;
+    transform: translateY(-1px);
+  }
+}
+
+.recent-todos {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  h3 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+    font-size: 1.2rem;
+  }
+}

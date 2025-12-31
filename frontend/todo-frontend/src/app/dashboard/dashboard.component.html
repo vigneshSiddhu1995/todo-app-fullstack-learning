@@ -1,18 +1,23 @@
 <div class="dashboard-container">
   <!-- Stats Cards Section -->
-  <div class="stats-section">
+  <div class="stats-section" *ngIf="dashboardStats">
     <div class="stat-card pending">
       <h3>Pending</h3>
-      <span class="count">5</span>
-    </div>
-    <div class="stat-card in-progress">
-      <h3>In Progress</h3>
-      <span class="count">2</span>
+      <span class="count">{{ dashboardStats.pendingTodos }}</span>
     </div>
     <div class="stat-card completed">
       <h3>Completed</h3>
-      <span class="count">8</span>
+      <span class="count">{{ dashboardStats.completedTodos }}</span>
     </div>
+    <div class="stat-card total">
+      <h3>Total</h3>
+      <span class="count">{{ dashboardStats.totalTodos }}</span>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="!dashboardStats">
+    <p>Loading dashboard stats...</p>
   </div>
 
   <!-- Quick Actions Section -->
