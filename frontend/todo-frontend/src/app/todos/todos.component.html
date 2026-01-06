@@ -1,0 +1,155 @@
+<div class="todos-container">
+  <div class="todos-header">
+    <h1>My Todos</h1>
+    <div class="stats">
+      <span class="stat">Total: <strong>{{ totalTodos }}</strong></span>
+      <span class="stat">Active: <strong>{{ activeTodos }}</strong></span>
+      <span class="stat">Completed: <strong>{{ completedTodos }}</strong></span>
+    </div>
+  </div>
+
+  <div class="error-message" *ngIf="error">
+    Warning: {{ error }}
+    <button class="close-btn" (click)="error = ''">X</button>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <div class="add-todo-form">
+    <h2>Add New Todo</h2>
+    <form (ngSubmit)="createTodo()">
+      <div class="form-group">
+        <input 
+          type="text" 
+          [(ngModel)]="newTodo.title" 
+          name="title"
+          placeholder="Todo title" 
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <textarea 
+          [(ngModel)]="newTodo.description" 
+          name="description"
+          placeholder="Description (optional)" 
+          class="form-control"
+          rows="3"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label>Priority:</label>
+        <select [(ngModel)]="newTodo.priority" name="priority" class="form-control">
+          <option value="LOW">Low</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="HIGH">High</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+        {{ loading ? 'Adding...' : 'Add Todo' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="resetForm()" [disabled]="loading">
+        Clear
+      </button>
+    </form>
+  </div>
+
+  <div class="filter-buttons">
+    <button 
+      [class.active]="filter === 'all'" 
+      (click)="setFilter('all')"
+      class="btn btn-filter"
+    >
+      All ({{ totalTodos }})
+    </button>
+    <button 
+      [class.active]="filter === 'active'" 
+      (click)="setFilter('active')"
+      class="btn btn-filter"
+    >
+      Active ({{ activeTodos }})
+    </button>
+    <button 
+      [class.active]="filter === 'completed'" 
+      (click)="setFilter('completed')"
+      class="btn btn-filter"
+    >
+      Completed ({{ completedTodos }})
+    </button>
+  </div>
+
+  <div class="todos-list">
+    <div *ngIf="filteredTodos.length === 0 && !loading" class="no-todos">
+      <p>{{ filter === 'all' ? 'No todos yet. Add one above!' : 'No ' + filter + ' todos.' }}</p>
+    </div>
+
+    <div *ngFor="let todo of filteredTodos" class="todo-item" [class.completed]="todo.completed">
+      <div *ngIf="editingTodo?.id !== todo.id" class="todo-view">
+        <div class="todo-checkbox">
+          <input 
+            type="checkbox" 
+            [checked]="todo.completed" 
+            (change)="toggleComplete(todo)"
+            [id]="'todo-' + todo.id"
+          />
+          <label [for]="'todo-' + todo.id"></label>
+        </div>
+        
+        <div class="todo-content">
+          <h3 [class.completed-text]="todo.completed">{{ todo.title }}</h3>
+          <p *ngIf="todo.description" class="todo-description">{{ todo.description }}</p>
+          <div class="todo-meta">
+            <span class="priority-badge" [ngClass]="getPriorityClass(todo.priority)">
+              {{ todo.priority }}
+            </span>
+            <span class="todo-date" *ngIf="todo.createdAt">
+              Created: {{ todo.createdAt | date: 'short' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="todo-actions">
+          <button class="btn btn-icon btn-edit" (click)="startEdit(todo)" title="Edit">
+            Edit
+          </button>
+          <button class="btn btn-icon btn-delete" (click)="deleteTodo(todo.id!)" title="Delete">
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="editingTodo?.id === todo.id" class="todo-edit">
+        <div class="form-group">
+          <input 
+            type="text" 
+            [(ngModel)]="editingTodo!.title" 
+            placeholder="Todo title" 
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <textarea 
+            [(ngModel)]="editingTodo!.description" 
+            placeholder="Description" 
+            class="form-control"
+            rows="2"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <select [(ngModel)]="editingTodo!.priority" class="form-control">
+            <option value="LOW">Low</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HIGH">High</option>
+          </select>
+        </div>
+        <div class="edit-actions">
+          <button class="btn btn-success" (click)="saveEdit()">Save</button>
+          <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

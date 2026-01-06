@@ -21,4 +21,7 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
     long countCompletedTodos();
 
     List<Todo> findByPriorityOrderByCreatedAtDesc(Priority priority);
+
+    // Method to check if a todo with the same title already exists (case-insensitive)
+    boolean existsByTitleIgnoreCase(String title);
 }

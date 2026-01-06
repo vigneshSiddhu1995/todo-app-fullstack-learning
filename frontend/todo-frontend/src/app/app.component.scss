@@ -1,11 +1,45 @@
 header {
   background-color: #f8f9fa;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  h1 {
+    margin: 0 0 15px 0;
+    text-align: center;
+    color: #2c3e50;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+    a {
+      padding: 10px 20px;
+      text-decoration: none;
+      color: #7f8c8d;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: all 0.3s;
+
+      &:hover {
+        background: #ecf0f1;
+        color: #2c3e50;
+      }
+
+      &.active {
+        background: #3498db;
+        color: white;
+      }
+    }
+  }
 }
 
 main {
-  padding: 1rem;
-  max-width: 600px;
+  padding: 2rem 1rem;
+  max-width: 1200px;
   margin: 0 auto;
+  min-height: calc(100vh - 250px);
 }
 
 footer {
